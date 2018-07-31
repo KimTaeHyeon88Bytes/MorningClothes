@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <% include parts/head %>
+  </head>
+  <body>
+    <h1>Clothes Gallery</h1>
+
+    <% include parts/nav %>
+
+    <div class="data">
+      <ul>
+        <% datas.forEach(function(data) { %>
+        <li>
+          <%= data.title %>
+        </li>
+        <img src="../images/<%= data.picture %>" alt="no image">
+        <% }); %>
+      </ul>
+    </div>
+  </body>
+</html>

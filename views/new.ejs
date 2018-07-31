@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <% include parts/head %>
+  </head>
+  <body>
+    <h1>New</h1>
+
+    <% include parts/nav %>
+
+    <a href="/index">Back</a>
+
+    <div class="data data-new">
+      <form action="/index" method="post">
+        <div>
+          <label name="title">title</label>
+          <input type="text" id="title" name="title">
+        </div>
+        <div>
+          <label name="picture">picture</label>
+          <input type="text" id="picture" name="picture">
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>
