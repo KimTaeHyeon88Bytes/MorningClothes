@@ -13,14 +13,14 @@
     <a href="/index">Back</a>
 
     <div class="data data-new">
-      <form action="/index" method="post">
+      <form action="/index" method="post" enctype="multipart/form-data">
         <div>
           <label name="title">title</label>
           <input type="text" id="title" name="title">
         </div>
         <div>
           <label name="picture">picture</label>
-          <input type="text" id="picture" name="picture">
+          <input type="file" id="picture" name="picture">
         </div>
         <button type="submit">Submit</button>
       </form>

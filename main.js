@@ -1,9 +1,24 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
+var multer = require("multer");
 var mongoose = require("mongoose");
 
 var main = express();
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, "public/images/");
+  },
+  filename: function(req, file, cb) {
+    Num.findOne({id:"id"}, function(err, num) {
+      cb(null, num.number + 1 + ".png");
+      Num.findOneAndUpdate({id:"id"}, {number:num.number + 1, count:num.count + 1}, function(err, num) {
+      });
+    });
+  }
+});
+var upload = multer({storage:storage});
 
 mongoose.connect(process.env.MONGO_DB, {useNewUrlParser:true});
 var db = mongoose.connection;
@@ -20,6 +35,12 @@ var dataSchema = mongoose.Schema({
   picture:{type:String, required:true}
 });
 var Data = mongoose.model("data", dataSchema);
+var numSchema = mongoose.Schema({
+  id:{type:String},
+  number:{type:Number},
+  count:{type:Number}
+});
+var Num = mongoose.model("num", numSchema);
 
 main.set("view engine", "ejs");
 main.use(express.static(__dirname + "/public"));
@@ -39,10 +60,12 @@ main.get("/index", function(req, res) {
 main.get("/index/new", function(req, res) {
   res.render("new");
 });
-main.post("/index", function(req, res) {
-  Data.create(req.body, function(err, data) {
-    if(err) return ress.json(err);
-    res.redirect("/index");
+main.post("/index", upload.single("picture"), function(req, res) {
+  Num.findOne({id:"id"}, function(err, num) {
+    Data.create({"title":req.body.title, "picture":num.number}, function(err, data) {
+      if(err) return res.json(err);
+      res.redirect("/index");
+    });
   });
 });
 
