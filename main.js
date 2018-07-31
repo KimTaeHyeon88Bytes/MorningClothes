@@ -46,6 +46,8 @@ main.post("/index", function(req, res) {
   });
 });
 
-main.listen(8000, function() {
+var port = process.env.PORT || 8000;
+
+main.listen(port, function() {
   console.log("Server On!");
 });
