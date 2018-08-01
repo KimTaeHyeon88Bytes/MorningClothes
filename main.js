@@ -32,7 +32,8 @@ db.on("error", function(err) {
 
 var dataSchema = mongoose.Schema({
   title:{type:String},
-  picture:{type:String, required:true}
+  picture:{type:String, required:true},
+  comment:{type:String}
 });
 var Data = mongoose.model("data", dataSchema);
 var numSchema = mongoose.Schema({
@@ -49,22 +50,43 @@ main.use(bodyParser.urlencoded({extended:true}));
 main.use(methodOverride("_method"));
 
 main.get("/", function(req, res) {
+  /*Data.create({"title":"prevent ERROR", "picture":"0", "comment":""}, function(err, Data) {
+    if(err) return res.json(err);
+  });*/
   res.redirect("/index");
 });
 main.get("/index", function(req, res) {
   Data.find({}, function(err, datas) {
     if(err) return res.json(err);
-    res.render("index", {datas:datas});
+    var n = datas[datas.length - 1].picture;
+    var info = {
+      datas:datas,
+      num:n
+    };
+    res.render("index", info);
   });
 });
 main.get("/index/new", function(req, res) {
   res.render("new");
+});
+main.get("/index/:id", function(req, res) {
+  Data.findOne({_id:req.params.id}, function(err, data) {
+    res.render("show", {data:data});
+  });
 });
 main.post("/index", upload.single("picture"), function(req, res) {
   Num.findOne({id:"id"}, function(err, num) {
     Data.create({"title":req.body.title, "picture":num.number}, function(err, data) {
       if(err) return res.json(err);
       res.redirect("/index");
+    });
+  });
+});
+main.put("/index/:id", function(req, res) {
+  Data.findOne({_id:req.params.id}, function(err, datac) {
+    Data.findOneAndUpdate({_id:req.params.id}, {"comment":datac.comment + "!@#" + req.body.comment}, function(err, data) {
+      if(err) return res.json(err);
+      res.redirect("/index/" + req.params.id);
     });
   });
 });

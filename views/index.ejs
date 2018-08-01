@@ -6,19 +6,44 @@
     <% include parts/head %>
   </head>
   <body>
-    <h1>Clothes Gallery</h1>
+    <!--<div class="data">
+      <h1>Clothes Gallery</h1>
+    </div>-->
 
     <% include parts/nav %>
 
     <div class="data">
-      <ul>
-        <% datas.forEach(function(data) { %>
-        <li>
-          <%= data.title %>
-        </li>
-        <img src="../images/<%= data.picture %>.png" alt="no image">
-        <% }); %>
-      </ul>
+      <div class="container">
+        <!--<ul>
+          <% for(var i = num; i >= 1; i--) { %>
+            <% for(var j = 0; j < datas.length; j++) { %>
+              <% if(datas[j].picture == i) { %>
+          <li>
+            <a href="/index/<%= datas[j]._id %>"><%= datas[j].title %></a>
+          </li>
+          <a href="/index/<%= datas[j]._id %>"><img src="../images/<%= datas[j].picture %>.png" alt="no image"></a>
+          <% break; } %>
+          <% } %>
+          <% } %>
+        </ul>-->
+        <% for(var i = num; i >= 1; i--) { %>
+          <% for(var j = 0; j < datas.length; j++) { %>
+            <% if(datas[j].picture == i) { %>
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <a href="/index/<%= datas[j]._id %>"><img src="../images/<%= datas[j].picture %>.png" alt="no image"></a>
+              <div class="caption">
+                <h3><a href="/index/<%= datas[j]._id %>"><%= datas[j].title %></a></h3>
+                <p>...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% break; } %>
+        <% } %>
+        <% } %>
+      </div>
     </div>
   </body>
 </html>

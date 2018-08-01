@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <% include parts/head %>
+  </head>
+  <body>
+    <!--<div class="data">
+      <h1>Show</h1>
+    </div>-->
+
+    <% include parts/nav %>
+
+    <div class="container">
+      <a href="/index" class="btn btn-danger">Back</a>
+
+      <h2><%= data.title %></h2>
+      <img src="../images/<%= data.picture %>.png" alt="no image" style="width:300px">
+      <br><br>
+      <div class="data data-new">
+        <form action="/index/<%= data._id %>?_method=put" method="post">
+          <div class="form-group">
+            <label name="comment">comment</label>
+            <input type="text" id="comment" name="comment" class="form-control" style="height:70px">
+          </div>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+        <h3>Comments</h3>
+        <!--<ul>
+          <% var comment = data.comment.split("!@#"); %>
+          <% for(var i = 0; i < comment.length; i++) { %>
+          <li>
+            <%= comment[i] %>
+          </li>
+          <% } %>
+        </ul>-->
+        <% var comment = data.comment.split("!@#"); %>
+        <% for(var i = 0; i < comment.length; i++) { %>
+        <div class="media">
+          <div class="media-left">
+          </div>
+          <div class="media-body">
+            <%= comment[i] %>
+          </div>
+          <br>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>

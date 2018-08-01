@@ -5,3 +5,7 @@
   display:inline-block;
   width:50px
 }
+
+.data data-show img {
+  width:100px;
+}
