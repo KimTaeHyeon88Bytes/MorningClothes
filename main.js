@@ -74,6 +74,30 @@ main.get("/index/:id", function(req, res) {
     res.render("show", {data:data});
   });
 });
+main.get("/index/settings/reset", function(req, res) {
+  Data.remove({}, function(err, data) {
+    if(err) res.json(err);
+  });
+  Data.create({"title":"prevent ERROR", "picture":"0", "comment":""}, function(err, data) {
+    if(err) res.json(err);
+  });
+  Num.findOneAndUpdate({id:"id"}, {"id":"id", "number":2, "count":2}, function(err, data) {
+    if(err) res.json(err);
+  });
+  res.send("Successfully reset!");
+});
+main.get("/index/settings/makeEx1", function(req, res) {
+  Data.create({"title":"ex1", "picture":"1", "comment":""}, function(err, data) {
+    if(err) res.json(err);
+  });
+  res.send("Successfully make example1");
+});
+main.get("/index/settings/makeEx2", function(req, res) {
+  Data.create({"title":"ex2", "picture":"2", "comment":""}, function(err, data) {
+    if(err) res.json(err);
+  });
+  res.send("Successfully make example2");
+});
 main.post("/index", upload.single("picture"), function(req, res) {
   Num.findOne({id:"id"}, function(err, num) {
     Data.create({"title":req.body.title, "picture":num.number, "comment":""}, function(err, data) {
