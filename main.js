@@ -76,7 +76,7 @@ main.get("/index/:id", function(req, res) {
 });
 main.post("/index", upload.single("picture"), function(req, res) {
   Num.findOne({id:"id"}, function(err, num) {
-    Data.create({"title":req.body.title, "picture":num.number}, function(err, data) {
+    Data.create({"title":req.body.title, "picture":num.number, "comment":""}, function(err, data) {
       if(err) return res.json(err);
       res.redirect("/index");
     });
